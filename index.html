@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For My Love ❤️</title>
+
+<!-- FONT SO SWEET -->
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Dancing+Script:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+body{
+  margin:0;
+  background:linear-gradient(135deg,#ff758c,#ff7eb3);
+  color:#fff;
+  text-align:center;
+  overflow:hidden;
+  font-family:'Dancing Script', cursive;
+}
+
+/* JUDUL */
+h1{
+  margin:20px 0 10px;
+  font-family:'Pacifico', cursive;
+  font-size:34px;
+  text-shadow:0 0 18px rgba(255,255,255,.9);
+}
+
+/* SLIDER */
+.slider{
+  max-width:900px;
+  margin:auto;
+  overflow:hidden;
+  position:relative;
+  z-index:2;
+}
+
+.slides{
+  display:flex;
+  transition:transform 1.2s cubic-bezier(0.77,0,0.175,1);
+}
+
+.slide{
+  min-width:100%;
+  display:flex;
+  justify-content:center;
+  gap:12px;
+}
+
+.slide img{
+  width:30%;
+  height:220px;
+  object-fit:cover;
+  border-radius:20px;
+  box-shadow:0 0 28px rgba(255,255,255,.45);
+  animation:float 4s ease-in-out infinite;
+}
+
+/* KATA CINTA */
+.caption{
+  margin:20px;
+  padding:20px;
+  background:rgba(255,255,255,.25);
+  border-radius:20px;
+  font-size:22px;
+  font-weight:600;
+  animation:fadeText 1s ease;
+  box-shadow:0 0 22px rgba(255,255,255,.35);
+}
+
+/* BUTTON */
+button{
+  background:#ff4b7d;
+  border:none;
+  color:#fff;
+  padding:10px 24px;
+  margin:10px;
+  border-radius:30px;
+  font-size:18px;
+  font-family:'Dancing Script', cursive;
+  cursor:pointer;
+}
+
+button:hover{
+  background:#ff1e62;
+}
+
+/* LOVE FALL */
+.love{
+  position:fixed;
+  top:-10px;
+  font-size:22px;
+  animation:fall linear infinite;
+  z-index:1;
+}
+
+@keyframes fall{
+  to{
+    transform:translateY(110vh);
+    opacity:0;
+  }
+}
+
+@keyframes float{
+  0%{transform:translateY(0);}
+  50%{transform:translateY(-10px);}
+  100%{transform:translateY(0);}
+}
+
+@keyframes fadeText{
+  from{opacity:0;transform:translateY(20px);}
+  to{opacity:1;transform:translateY(0);}
+}
+
+@media(max-width:768px){
+  .slide img{height:150px;}
+  h1{font-size:28px;}
+  .caption{font-size:20px;}
+}
+</style>
+</head>
+
+<body>
+
+<h1>Untuk Kamu, Cintaku ❤️</h1>
+
+<div class="slider">
+  <div class="slides" id="slides">
+
+    <div class="slide">
+      <img src="foto 1.jpeg">
+      <img src="foto 2.jpeg">
+      <img src="foto 3.jpeg">
+    </div>
+
+    <div class="slide">
+      <img src="foto 4.jpeg">
+      <img src="foto 5.jpeg">
+      <img src="foto 6.jpeg">
+    </div>
+
+    <div class="slide">
+      <img src="foto 7.jpeg">
+      <img src="foto 8.jpeg">
+      <img src="foto 9.jpeg">
+    </div>
+
+  </div>
+</div>
+
+<div class="caption" id="caption"></div>
+
+<button onclick="prev()">❮ Sebelumnya</button>
+<button onclick="next()">Selanjutnya ❯</button>
+
+<audio id="music" loop>
+  <source src="lagu.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+let index=0;
+const slides=document.getElementById("slides");
+const caption=document.getElementById("caption");
+const total=document.querySelectorAll(".slide").length;
+
+/* KATA PER SLIDE */
+const texts=[
+  "Sejak ada kamu, hal sederhana jadi terasa istimewa 🤍",
+  "Aku jatuh cinta bukan karena sempurna, tapi karena kamu 💕",
+  "Selama bersamamu, aku selalu merasa pulang ❤️"
+];
+
+function showSlide(){
+  slides.style.transform=`translateX(-${index*100}%)`;
+  caption.style.animation="none";
+  caption.offsetHeight;
+  caption.style.animation="fadeText 1s ease";
+  caption.innerHTML=texts[index];
+}
+
+function next(){
+  index=(index+1)%total;
+  showSlide();
+}
+
+function prev(){
+  index=(index-1+total)%total;
+  showSlide();
+}
+
+/* AUTO SLIDE */
+setInterval(next,4000);
+
+/* PLAY MUSIC AFTER TOUCH */
+const music=document.getElementById("music");
+document.body.addEventListener("click",()=>music.play(),{once:true});
+
+/* LOVE RAIN */
+function createLove(){
+  const love=document.createElement("div");
+  love.className="love";
+  love.innerHTML="💖";
+  love.style.left=Math.random()*100+"vw";
+  love.style.animationDuration=(3+Math.random()*3)+"s";
+  document.body.appendChild(love);
+  setTimeout(()=>love.remove(),6000);
+}
+setInterval(createLove,300);
+
+/* INIT */
+showSlide();
+</script>
+
+</body>
+</html>
